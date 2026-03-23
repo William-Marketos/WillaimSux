@@ -35,6 +35,11 @@ document.addEventListener('mousemove', e => {
   cursorDot.style.top  = mouseY + 'px';
 });
 
+document.addEventListener('click', () => {
+  const shot = new Audio('gunshot.mp3');
+  shot.play();
+});
+
 function animateRing() {
   ringX += (mouseX - ringX) * 0.14;
   ringY += (mouseY - ringY) * 0.14;

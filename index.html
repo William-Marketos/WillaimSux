@@ -15,6 +15,22 @@
   <div class="cursor" id="cursor"></div>
   <div class="cursor-ring" id="cursorRing"></div>
 
+  <!-- Gunshot Sound when clicking -->
+  <audio id="gunshot" src="WillaimSux/Sounds/freesound_community-m1-garand-rifle-80192.mp3" preload="auto"></audio>
+
+  <script>
+    const gunshot = document.getElementById('gunshot');
+
+    document.addEventListener('click', () => {
+      // Restart sound if already playing
+      gunshot.currentTime = 0;
+      gunshot.play().catch(() => {
+        // Some browsers block autoplay until user interaction;
+        // click already counts, so this usually won't fire.
+      });
+    });
+  </script>
+
   <!-- Grain overlay for parchment texture -->
   <div class="grain-overlay" aria-hidden="true"></div>
 
