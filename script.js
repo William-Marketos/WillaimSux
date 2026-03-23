@@ -412,33 +412,84 @@ const sounds = {
   },
 
   boom(ctx) {
-    const out   = getMasterGain(ctx);
-    const t     = ctx.currentTime;
-    // Sub osc
-    const sub   = ctx.createOscillator();
+    const out = getMasterGain(ctx);
+    const t   = ctx.currentTime;
+
+    // =====================
+    // DISTORTION (Vine sauce)
+    // =====================
+    const distortion = ctx.createWaveShaper();
+
+    function makeDistortionCurve(amount = 400) {
+      const n = 44100;
+      const curve = new Float32Array(n);
+      for (let i = 0; i < n; i++) {
+        const x = (i * 2) / n - 1;
+        curve[i] = (3 + amount) * x * 20 * Math.PI / (Math.PI + amount * Math.abs(x));
+      }
+      return curve;
+    }
+
+    distortion.curve = makeDistortionCurve(400);
+    distortion.oversample = '4x';
+
+    // =====================
+    // SUB BOOM (main hit)
+    // =====================
+    const sub = ctx.createOscillator();
     const subEnv = ctx.createGain();
-    sub.type    = 'sine';
-    sub.frequency.setValueAtTime(80, t);
-    sub.frequency.exponentialRampToValueAtTime(20, t + 0.8);
-    subEnv.gain.setValueAtTime(1.2, t);
-    subEnv.gain.exponentialRampToValueAtTime(0.001, t + 1.0);
-    sub.connect(subEnv); subEnv.connect(out);
-    sub.start(t); sub.stop(t + 1.1);
-    // Noise burst
-    const bufLen = Math.floor(ctx.sampleRate * 0.3);
-    const buf    = ctx.createBuffer(1, bufLen, ctx.sampleRate);
-    const data   = buf.getChannelData(0);
-    for (let i = 0; i < bufLen; i++) data[i] = Math.random() * 2 - 1;
-    const noise  = ctx.createBufferSource();
+
+    sub.type = 'sine';
+
+    // Fast, punchy drop
+    sub.frequency.setValueAtTime(120, t);
+    sub.frequency.exponentialRampToValueAtTime(30, t + 0.25);
+
+    // Strong transient
+    subEnv.gain.setValueAtTime(2.5, t);
+    subEnv.gain.exponentialRampToValueAtTime(0.8, t + 0.08);
+    subEnv.gain.exponentialRampToValueAtTime(0.001, t + 0.9);
+
+    sub.connect(subEnv);
+    subEnv.connect(distortion);
+    distortion.connect(out);
+
+    sub.start(t);
+    sub.stop(t + 1.0);
+
+    // =====================
+    // NOISE ATTACK (crack)
+    // =====================
+    const bufLen = Math.floor(ctx.sampleRate * 0.25);
+    const buf = ctx.createBuffer(1, bufLen, ctx.sampleRate);
+    const data = buf.getChannelData(0);
+
+    for (let i = 0; i < bufLen; i++) {
+      data[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = ctx.createBufferSource();
     noise.buffer = buf;
+
     const noiseEnv = ctx.createGain();
-    const filter   = ctx.createBiquadFilter();
-    filter.type    = 'lowpass';
-    filter.frequency.value = 400;
-    noiseEnv.gain.setValueAtTime(0.5, t);
-    noiseEnv.gain.exponentialRampToValueAtTime(0.001, t + 0.35);
-    noise.connect(filter); filter.connect(noiseEnv); noiseEnv.connect(out);
-    noise.start(t); noise.stop(t + 0.4);
+    const filter = ctx.createBiquadFilter();
+
+    filter.type = 'lowpass';
+
+    // Bright → dark sweep (punchy click)
+    filter.frequency.setValueAtTime(2000, t);
+    filter.frequency.exponentialRampToValueAtTime(200, t + 0.2);
+
+    // Louder, tighter burst
+    noiseEnv.gain.setValueAtTime(1.2, t);
+    noiseEnv.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+
+    noise.connect(filter);
+    filter.connect(noiseEnv);
+    noiseEnv.connect(distortion);
+
+    noise.start(t);
+    noise.stop(t + 0.3);
   }
 };
 
