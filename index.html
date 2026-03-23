@@ -1,125 +1,667 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>William Marketos</title>
-  <style>
-    body {
-      font-family: Georgia, serif;
-      background-color: #fdf6ec;
-      color: #2c2c2c;
-      margin: 0;
-      padding: 0;
-
-      /* =============================================
-         BACKGROUND IMAGE (transparent / watermark)
-         Replace 'your-background-image.jpg' with your image path or URL.
-         Opacity is controlled via the ::before pseudo-element below.
-         ============================================= */
-    }
-
-    /* Transparent background image using a pseudo-element */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url('your-background-image.jpg'); /* <-- REPLACE THIS */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.08; /* 0 = invisible, 1 = fully visible — adjust to taste */
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    /* =============================================
-       LEFT BORDER IMAGE
-       Replace 'your-left-image.jpg' with your image path or URL.
-       ============================================= */
-    body::after {
-      content: '';
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: 120px;   /* Width of the left border image */
-      height: 100%;
-      background-image: url('your-left-image.jpg'); /* <-- REPLACE THIS */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.75; /* Adjust transparency */
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* =============================================
-       RIGHT BORDER IMAGE
-       Replace 'your-right-image.jpg' with your image path or URL.
-       Uses a separate div since body only has ::before and ::after.
-       ============================================= */
-    #right-border {
-      position: fixed;
-      right: 0;
-      top: 0;
-      width: 120px;   /* Width of the right border image */
-      height: 100%;
-      background-image: url('your-right-image.jpg'); /* <-- REPLACE THIS */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      opacity: 0.75; /* Adjust transparency */
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Main content sits above the background/border layers */
-    .content {
-      position: relative;
-      z-index: 2;
-      max-width: 700px;
-      margin: 60px auto;
-      padding: 0 20px;
-    }
-
-    h1 { font-size: 2.5em; color: #b84c00; }
-    .description { font-size: 1.1em; color: #555; font-style: italic; margin-bottom: 40px; }
-    h2 { color: #7a3b00; }
-    p { line-height: 1.8; }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>John Macklemore — The Official Vibe</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- Right border image div (body only supports two pseudo-elements) -->
-  <div id="right-border"></div>
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
 
-  <!-- All page content wrapped in .content so it sits above the layers -->
-  <div class="content">
-    <h1>William Sux</h1>
-    <p class="description">The truth: William does, indeed, sux — and everyone secretly knows it.</p>
-    <h2>The Fox Who Knew Too Much</h2>
-    <p>
-      Deep in the amber woods, where the leaves never quite decided between gold and red,
-      there lived a fox named Ember. She was not the fastest fox, nor the largest — but she
-      was, without question, the most curious.
-    </p>
-    <p>
-      Every morning she would trot to the edge of the meadow and sit very still, watching
-      the world arrange itself. She memorised the paths of the bees, the arguments of the
-      crows, and the exact moment the light turned silver before a storm.
-    </p>
-    <p>
-      One autumn evening, a lost traveller stumbled into the woods and sat down against an
-      oak, defeated. Ember crept close — closer than foxes usually dare — and simply sat
-      beside him. She didn't speak, of course. She was a fox. But she stayed until his
-      breathing slowed and his shoulders dropped.
-    </p>
-    <p>
-      In the morning, the traveller found the path home without knowing quite why he felt
-      so certain of the way. And Ember trotted back into the trees, already watching,
-      already learning the next small thing the world had hidden in plain sight.
-    </p>
+  <!-- Floating Background Shapes -->
+  <div class="bg-shapes" aria-hidden="true">
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+    <div class="shape shape-4"></div>
+    <div class="shape shape-5"></div>
+    <div class="shape shape-6"></div>
   </div>
 
+  <!-- ═══════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════ -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <span class="logo-bracket">[</span>JM<span class="logo-bracket">]</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#school" class="nav-link">School</a></li>
+      <li><a href="#hobbies" class="nav-link">Hobbies</a></li>
+      <li><a href="#facts" class="nav-link">Fun Facts</a></li>
+      <li><a href="#music-section" class="nav-link">Music</a></li>
+      <li><a href="#soundboard" class="nav-link">Soundboard</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section id="hero">
+    <div class="hero-noise"></div>
+
+    <div class="hero-marquee-top">
+      <span>JOHN MACKLEMORE ★ THE VIBE IS REAL ★ LIVING LOUD ★ BORN TO GROOVE ★ JOHN MACKLEMORE ★ THE VIBE IS REAL ★ LIVING LOUD ★ BORN TO GROOVE ★</span>
+    </div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Welcome to the world of</p>
+      <h1 class="hero-name reveal">
+        <span class="name-john">JOHN</span>
+        <br />
+        <span class="name-mack">MACKLE</span><span class="name-more neon-flicker">MORE</span>
+      </h1>
+      <p class="hero-tagline reveal">
+        <em>Student · Musician · Collector of Vibes</em>
+      </p>
+      <div class="hero-cta reveal">
+        <a href="#about" class="btn btn-primary">Enter My World</a>
+        <a href="#soundboard" class="btn btn-ghost">🎵 Hit the Soundboard</a>
+      </div>
+    </div>
+
+    <!-- Floating hero deco elements -->
+    <div class="hero-floaters" aria-hidden="true">
+      <div class="floater f1">★</div>
+      <div class="floater f2">♪</div>
+      <div class="floater f3">◆</div>
+      <div class="floater f4">✦</div>
+      <div class="floater f5">♫</div>
+      <div class="floater f6">◉</div>
+      <div class="floater f7">⬡</div>
+    </div>
+
+    <!-- Floating image frames -->
+    <div class="hero-img-frame frame-tl reveal-img">
+      <div class="img-placeholder">
+        <span class="img-icon">📸</span>
+        <span class="img-label">Your Photo</span>
+      </div>
+    </div>
+    <div class="hero-img-frame frame-br reveal-img">
+      <div class="img-placeholder">
+        <span class="img-icon">🎤</span>
+        <span class="img-label">Action Shot</span>
+      </div>
+    </div>
+
+    <div class="hero-marquee-bottom">
+      <span>EST. YOUR BIRTH YEAR ★ MAKING WAVES ★ ORIGINAL FLAVOUR ★ UNSTOPPABLE ★ EST. YOUR BIRTH YEAR ★ MAKING WAVES ★ ORIGINAL FLAVOUR ★ UNSTOPPABLE ★</span>
+    </div>
+
+    <div class="hero-scroll-hint">
+      <span>SCROLL</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       ABOUT ME
+  ═══════════════════════════════════════ -->
+  <section id="about" class="section">
+    <div class="section-inner">
+      <div class="section-tag reveal">// 01 — ABOUT ME</div>
+      <h2 class="section-title reveal">Who Is<br/><span class="highlight">John?</span></h2>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p class="big-p">
+            Hey there! I'm <strong>John Macklemore</strong> — a person who lives life in full colour
+            and never misses an opportunity to turn the music up.
+          </p>
+          <p>
+            ✏️ Write something personal about yourself here — your personality, where you're from,
+            what makes you <em>you</em>. Talk about your passions, your dreams, or even just the
+            random things that make your day worth living.
+          </p>
+          <p>
+            🌍 Add your hometown, your values, or a quote that captures your spirit. This is your
+            space — own it completely.
+          </p>
+          <div class="about-stats">
+            <div class="stat-card reveal">
+              <span class="stat-num" data-target="0">0</span>
+              <span class="stat-label">Years Young</span>
+            </div>
+            <div class="stat-card reveal">
+              <span class="stat-num" data-target="0">0</span>
+              <span class="stat-label">Hobbies</span>
+            </div>
+            <div class="stat-card reveal">
+              <span class="stat-num" data-target="0">0</span>
+              <span class="stat-label">Good Vibes / Day</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-images reveal">
+          <div class="img-card img-card-main tilt-card">
+            <div class="img-placeholder large">
+              <span class="img-icon">🧑‍🎨</span>
+              <span class="img-label">Main Profile Photo</span>
+            </div>
+            <div class="img-caption">That's me! 👋</div>
+          </div>
+          <div class="img-card img-card-small tilt-card" style="top:60%;right:-10%;">
+            <div class="img-placeholder small">
+              <span class="img-icon">📷</span>
+              <span class="img-label">Candid Moment</span>
+            </div>
+          </div>
+          <div class="img-card img-card-small tilt-card" style="top:5%;right:5%;">
+            <div class="img-placeholder small">
+              <span class="img-icon">🌟</span>
+              <span class="img-label">Fun Moment</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SCHOOL LIFE
+  ═══════════════════════════════════════ -->
+  <section id="school" class="section section-alt">
+    <div class="section-inner">
+      <div class="section-tag reveal">// 02 — SCHOOL LIFE</div>
+      <h2 class="section-title reveal">The <span class="highlight-pink">Academic</span><br/>Adventures</h2>
+
+      <div class="school-grid">
+        <div class="school-timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-year">Year ????</div>
+              <h3>Primary School</h3>
+              <p>✏️ Write about your primary school days here — favourite teachers, best memories,
+                 that one time something hilarious happened at assembly.</p>
+              <div class="timeline-img">
+                <div class="img-placeholder small">
+                  <span class="img-icon">🏫</span>
+                  <span class="img-label">School Photo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-year">Year ????</div>
+              <h3>High School</h3>
+              <p>✏️ Talk about your high school experience — sports teams, drama, science fairs,
+                 your crew, the chaos of exams, and anything in between.</p>
+              <div class="timeline-img">
+                <div class="img-placeholder small">
+                  <span class="img-icon">🎒</span>
+                  <span class="img-label">High School Pic</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+              <div class="timeline-year">Present</div>
+              <h3>University / Current Chapter</h3>
+              <p>✏️ What are you studying? What campus life is like? Favourite subject?
+                 The grind, the wins, the social scene — spill it all.</p>
+              <div class="timeline-img">
+                <div class="img-placeholder small">
+                  <span class="img-icon">🎓</span>
+                  <span class="img-label">Campus Life</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="school-side reveal">
+          <div class="achievement-block">
+            <h3 class="achievement-title">🏆 Achievements</h3>
+            <ul class="achievement-list">
+              <li><span class="ach-badge">★</span> Add your achievement here</li>
+              <li><span class="ach-badge">★</span> Another proud moment</li>
+              <li><span class="ach-badge">★</span> Something you're really proud of</li>
+              <li><span class="ach-badge">★</span> That award you can't stop mentioning</li>
+            </ul>
+          </div>
+          <div class="subject-block">
+            <h3>🎯 Favourite Subjects</h3>
+            <div class="subject-pills">
+              <span class="pill">Add Subject</span>
+              <span class="pill">Add Subject</span>
+              <span class="pill">Add Subject</span>
+              <span class="pill">Add Subject</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       HOBBIES
+  ═══════════════════════════════════════ -->
+  <section id="hobbies" class="section">
+    <div class="section-inner">
+      <div class="section-tag reveal">// 03 — HOBBIES</div>
+      <h2 class="section-title reveal">What Gets <span class="highlight-cyan">Me Going</span></h2>
+
+      <div class="hobbies-grid">
+        <div class="hobby-card reveal tilt-card">
+          <div class="hobby-icon">🎸</div>
+          <h3>Music</h3>
+          <p>✏️ Write about your love for music — genres, instruments, what music means to you.</p>
+          <div class="hobby-img">
+            <div class="img-placeholder medium">
+              <span class="img-icon">🎵</span>
+              <span class="img-label">Music Moment</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hobby-card hobby-card-big reveal tilt-card">
+          <div class="hobby-icon">✏️</div>
+          <h3>Your Hobby</h3>
+          <p>✏️ Describe one of your main hobbies — what it is, how long you've done it, why it matters to you.</p>
+          <div class="hobby-img">
+            <div class="img-placeholder medium">
+              <span class="img-icon">📸</span>
+              <span class="img-label">Hobby Photo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hobby-card reveal tilt-card">
+          <div class="hobby-icon">🌍</div>
+          <h3>Exploring</h3>
+          <p>✏️ Favourite places, travel stories, or even just your local adventures.</p>
+          <div class="hobby-img">
+            <div class="img-placeholder medium">
+              <span class="img-icon">🗺️</span>
+              <span class="img-label">Adventure Photo</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hobby-card reveal tilt-card">
+          <div class="hobby-icon">🎮</div>
+          <h3>Gaming / Tech</h3>
+          <p>✏️ Games you play, tech projects you're into, or anything digital that fascinates you.</p>
+          <div class="hobby-img">
+            <div class="img-placeholder medium">
+              <span class="img-icon">🕹️</span>
+              <span class="img-label">Gaming Setup</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hobby-card reveal tilt-card">
+          <div class="hobby-icon">📚</div>
+          <h3>Reading / Learning</h3>
+          <p>✏️ Favourite books, topics you deep-dive into, or podcasts you can't stop listening to.</p>
+          <div class="hobby-img">
+            <div class="img-placeholder medium">
+              <span class="img-icon">📖</span>
+              <span class="img-label">Bookshelf</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hobby-card reveal tilt-card">
+          <div class="hobby-icon">🎨</div>
+          <h3>Creative Stuff</h3>
+          <p>✏️ Art, design, photography, content creation — your creative side in full detail.</p>
+          <div class="hobby-img">
+            <div class="img-placeholder medium">
+              <span class="img-icon">🖌️</span>
+              <span class="img-label">Creative Work</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FUN FACTS
+  ═══════════════════════════════════════ -->
+  <section id="facts" class="section section-facts">
+    <div class="section-inner">
+      <div class="section-tag reveal">// 04 — FUN FACTS</div>
+      <h2 class="section-title reveal">Things You <span class="highlight">Didn't Know</span><br/>About John</h2>
+
+      <div class="facts-grid">
+        <div class="fact-card reveal" data-index="1">
+          <div class="fact-num">01</div>
+          <p>✏️ Write a surprising fact about yourself — something people wouldn't guess about you.</p>
+          <div class="fact-emoji">🤯</div>
+        </div>
+        <div class="fact-card reveal" data-index="2">
+          <div class="fact-num">02</div>
+          <p>✏️ A quirky habit or daily ritual that makes you uniquely you.</p>
+          <div class="fact-emoji">😄</div>
+        </div>
+        <div class="fact-card reveal" data-index="3">
+          <div class="fact-num">03</div>
+          <p>✏️ Your weirdest talent — the thing that always wins you a party trick competition.</p>
+          <div class="fact-emoji">🎪</div>
+        </div>
+        <div class="fact-card reveal" data-index="4">
+          <div class="fact-num">04</div>
+          <p>✏️ Your favourite food combo that most people find disgusting but you swear by.</p>
+          <div class="fact-emoji">🍕</div>
+        </div>
+        <div class="fact-card reveal" data-index="5">
+          <div class="fact-num">05</div>
+          <p>✏️ A skill you have that nobody would expect based on who you are.</p>
+          <div class="fact-emoji">⚡</div>
+        </div>
+        <div class="fact-card reveal" data-index="6">
+          <div class="fact-num">06</div>
+          <p>✏️ Your most controversial hot take — music, movies, food, anything.</p>
+          <div class="fact-emoji">🔥</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       MUSIC SECTION
+  ═══════════════════════════════════════ -->
+  <section id="music-section" class="section section-alt">
+    <div class="section-inner">
+      <div class="section-tag reveal">// 05 — MY MUSICAL WORLD</div>
+      <h2 class="section-title reveal">The <span class="highlight-pink">Playlist</span><br/>of My Life</h2>
+
+      <div class="music-content">
+        <div class="music-text reveal">
+          <p class="big-p">Music is the soundtrack to everything.</p>
+          <p>✏️ Write about your relationship with music — when you discovered it, genres that
+             define you, artists who changed your life, gigs you've been to, or music you make yourself.</p>
+          <p>✏️ Share a playlist embed, a Spotify link, or just list your absolute favourite songs
+             of all time below.</p>
+        </div>
+
+        <!-- Favourite Tracks List -->
+        <div class="tracklist reveal">
+          <div class="tracklist-header">
+            <span>🎧 All-Time Favourites</span>
+          </div>
+          <div class="track-item">
+            <span class="track-num">01</span>
+            <div class="track-info">
+              <span class="track-title">Song Title</span>
+              <span class="track-artist">Artist Name</span>
+            </div>
+            <span class="track-dur">0:00</span>
+          </div>
+          <div class="track-item">
+            <span class="track-num">02</span>
+            <div class="track-info">
+              <span class="track-title">Song Title</span>
+              <span class="track-artist">Artist Name</span>
+            </div>
+            <span class="track-dur">0:00</span>
+          </div>
+          <div class="track-item">
+            <span class="track-num">03</span>
+            <div class="track-info">
+              <span class="track-title">Song Title</span>
+              <span class="track-artist">Artist Name</span>
+            </div>
+            <span class="track-dur">0:00</span>
+          </div>
+          <div class="track-item">
+            <span class="track-num">04</span>
+            <div class="track-info">
+              <span class="track-title">Song Title</span>
+              <span class="track-artist">Artist Name</span>
+            </div>
+            <span class="track-dur">0:00</span>
+          </div>
+          <div class="track-item">
+            <span class="track-num">05</span>
+            <div class="track-info">
+              <span class="track-title">Song Title</span>
+              <span class="track-artist">Artist Name</span>
+            </div>
+            <span class="track-dur">0:00</span>
+          </div>
+        </div>
+
+        <!-- Genre Tags -->
+        <div class="genre-cloud reveal">
+          <h3>Genres I Rock With</h3>
+          <div class="genre-pills">
+            <span class="genre-pill" style="--c:#ff006e;">Add Genre</span>
+            <span class="genre-pill" style="--c:#fb5607;">Add Genre</span>
+            <span class="genre-pill" style="--c:#ffbe0b;">Add Genre</span>
+            <span class="genre-pill" style="--c:#3a86ff;">Add Genre</span>
+            <span class="genre-pill" style="--c:#8338ec;">Add Genre</span>
+            <span class="genre-pill" style="--c:#06d6a0;">Add Genre</span>
+          </div>
+        </div>
+
+        <!-- Spotify Embed Placeholder -->
+        <div class="spotify-placeholder reveal">
+          <div class="spotify-inner">
+            <span class="spotify-icon">🎵</span>
+            <p><strong>Embed Your Spotify Playlist Here!</strong></p>
+            <p class="small-text">Replace this block in the HTML with a Spotify embed iframe</p>
+            <code class="code-hint">&lt;iframe src="https://open.spotify.com/embed/playlist/YOUR_ID" ...&gt;</code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SOUNDBOARD
+  ═══════════════════════════════════════ -->
+  <section id="soundboard" class="section section-soundboard">
+    <div class="section-inner">
+      <div class="section-tag reveal">// 06 — THE SOUNDBOARD</div>
+      <h2 class="section-title reveal">Press a Button,<br/><span class="highlight-cyan">Make Some Noise</span></h2>
+      <p class="soundboard-sub reveal">Click any pad to trigger a sound. Mix them together for maximum chaos. 🎛️</p>
+
+      <div class="soundboard-grid reveal">
+        <!-- Row 1 -->
+        <button class="sound-pad pad-kick" data-sound="kick" data-label="KICK DRUM" aria-label="Play kick drum">
+          <span class="pad-icon">🥁</span>
+          <span class="pad-name">KICK</span>
+          <span class="pad-key">Q</span>
+        </button>
+        <button class="sound-pad pad-snare" data-sound="snare" data-label="SNARE HIT" aria-label="Play snare">
+          <span class="pad-icon">💥</span>
+          <span class="pad-name">SNARE</span>
+          <span class="pad-key">W</span>
+        </button>
+        <button class="sound-pad pad-hihat" data-sound="hihat" data-label="HI-HAT" aria-label="Play hi-hat">
+          <span class="pad-icon">🎵</span>
+          <span class="pad-name">HI-HAT</span>
+          <span class="pad-key">E</span>
+        </button>
+        <button class="sound-pad pad-clap" data-sound="clap" data-label="BIG CLAP" aria-label="Play clap">
+          <span class="pad-icon">👏</span>
+          <span class="pad-name">CLAP</span>
+          <span class="pad-key">R</span>
+        </button>
+        <!-- Row 2 -->
+        <button class="sound-pad pad-bass" data-sound="bass" data-label="BASS DROP" aria-label="Play bass">
+          <span class="pad-icon">🔊</span>
+          <span class="pad-name">BASS</span>
+          <span class="pad-key">A</span>
+        </button>
+        <button class="sound-pad pad-synth" data-sound="synth" data-label="SYNTH STAB" aria-label="Play synth">
+          <span class="pad-icon">🎹</span>
+          <span class="pad-name">SYNTH</span>
+          <span class="pad-key">S</span>
+        </button>
+        <button class="sound-pad pad-laser" data-sound="laser" data-label="LASER ZAP" aria-label="Play laser">
+          <span class="pad-icon">⚡</span>
+          <span class="pad-name">LASER</span>
+          <span class="pad-key">D</span>
+        </button>
+        <button class="sound-pad pad-airhorn" data-sound="airhorn" data-label="AIR HORN" aria-label="Play airhorn">
+          <span class="pad-icon">📯</span>
+          <span class="pad-name">AIR HORN</span>
+          <span class="pad-key">F</span>
+        </button>
+        <!-- Row 3 -->
+        <button class="sound-pad pad-vinyl" data-sound="vinyl" data-label="VINYL SCRATCH" aria-label="Play vinyl scratch">
+          <span class="pad-icon">💿</span>
+          <span class="pad-name">SCRATCH</span>
+          <span class="pad-key">Z</span>
+        </button>
+        <button class="sound-pad pad-woosh" data-sound="woosh" data-label="WOOSH!" aria-label="Play woosh">
+          <span class="pad-icon">🌬️</span>
+          <span class="pad-name">WOOSH</span>
+          <span class="pad-key">X</span>
+        </button>
+        <button class="sound-pad pad-chime" data-sound="chime" data-label="MAGIC CHIME" aria-label="Play chime">
+          <span class="pad-icon">✨</span>
+          <span class="pad-name">CHIME</span>
+          <span class="pad-key">C</span>
+        </button>
+        <button class="sound-pad pad-boom" data-sound="boom" data-label="EPIC BOOM" aria-label="Play boom">
+          <span class="pad-icon">💣</span>
+          <span class="pad-name">BOOM</span>
+          <span class="pad-key">V</span>
+        </button>
+      </div>
+
+      <div class="soundboard-display reveal">
+        <div class="sound-name-display" id="soundDisplay">— Press a pad or use your keyboard! —</div>
+        <div class="viz-bars" id="vizBars">
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+          <div class="viz-bar"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       GALLERY
+  ═══════════════════════════════════════ -->
+  <section id="gallery" class="section">
+    <div class="section-inner">
+      <div class="section-tag reveal">// 07 — GALLERY</div>
+      <h2 class="section-title reveal">Life in <span class="highlight">Photos</span></h2>
+      <p class="section-sub reveal">✏️ Replace the placeholders below by changing the <code>&lt;img&gt;</code> tags — just swap in your own image paths or URLs.</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-item gallery-item-wide reveal tilt-card">
+          <div class="img-placeholder gallery-ph">
+            <span class="img-icon">📸</span>
+            <span class="img-label">Featured Photo — Wide (Replace with &lt;img&gt;)</span>
+          </div>
+          <div class="gallery-overlay">Add caption here</div>
+        </div>
+        <div class="gallery-item reveal tilt-card">
+          <div class="img-placeholder gallery-ph">
+            <span class="img-icon">🌄</span>
+            <span class="img-label">Photo 2</span>
+          </div>
+          <div class="gallery-overlay">Caption</div>
+        </div>
+        <div class="gallery-item reveal tilt-card">
+          <div class="img-placeholder gallery-ph">
+            <span class="img-icon">🎉</span>
+            <span class="img-label">Photo 3</span>
+          </div>
+          <div class="gallery-overlay">Caption</div>
+        </div>
+        <div class="gallery-item reveal tilt-card">
+          <div class="img-placeholder gallery-ph">
+            <span class="img-icon">🏆</span>
+            <span class="img-label">Photo 4</span>
+          </div>
+          <div class="gallery-overlay">Caption</div>
+        </div>
+        <div class="gallery-item reveal tilt-card">
+          <div class="img-placeholder gallery-ph">
+            <span class="img-icon">🎸</span>
+            <span class="img-label">Photo 5</span>
+          </div>
+          <div class="gallery-overlay">Caption</div>
+        </div>
+        <div class="gallery-item gallery-item-tall reveal tilt-card">
+          <div class="img-placeholder gallery-ph">
+            <span class="img-icon">🌟</span>
+            <span class="img-label">Photo 6 — Tall</span>
+          </div>
+          <div class="gallery-overlay">Caption</div>
+        </div>
+        <div class="gallery-item reveal tilt-card">
+          <div class="img-placeholder gallery-ph">
+            <span class="img-icon">🎤</span>
+            <span class="img-label">Photo 7</span>
+          </div>
+          <div class="gallery-overlay">Caption</div>
+        </div>
+        <div class="gallery-item reveal tilt-card">
+          <div class="img-placeholder gallery-ph">
+            <span class="img-icon">🧑‍🤝‍🧑</span>
+            <span class="img-label">Photo 8</span>
+          </div>
+          <div class="gallery-overlay">Caption</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer id="footer">
+    <div class="footer-marquee">
+      <span>JOHN MACKLEMORE ★ KEEP IT REAL ★ STAY FUNKY ★ LIVE LOUD ★ JOHN MACKLEMORE ★ KEEP IT REAL ★ STAY FUNKY ★ LIVE LOUD ★ JOHN MACKLEMORE ★ KEEP IT REAL ★ STAY FUNKY ★ LIVE LOUD ★</span>
+    </div>
+    <div class="footer-inner">
+      <div class="footer-logo">[JM]</div>
+      <p class="footer-text">Made with ♥ and a lot of good vibes.<br/>© <span id="year"></span> John Macklemore. All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn" aria-label="Instagram">📸 Instagram</a>
+        <a href="#" class="social-btn" aria-label="Twitter">🐦 Twitter</a>
+        <a href="#" class="social-btn" aria-label="YouTube">▶️ YouTube</a>
+        <a href="#" class="social-btn" aria-label="Spotify">🎵 Spotify</a>
+      </div>
+    </div>
+    <div class="footer-back-top">
+      <button id="backToTop" aria-label="Back to top">↑ BACK TO TOP ↑</button>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
